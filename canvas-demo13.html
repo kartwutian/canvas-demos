@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews linear gradient</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        // var linearGrad = context.createLinearGradient(0,0,myCanvas.width,myCanvas.height);// 创建一条渐变线
+        var linearGrad = context.createLinearGradient(0,0,0,myCanvas.height);// 创建一条渐变线
+        // var linearGrad = context.createLinearGradient(0,0,myCanvas.width,0);// 创建一条渐变线
+
+        linearGrad.addColorStop(0.0,"#fff")
+        linearGrad.addColorStop(0.5,"#0ff")
+        linearGrad.addColorStop(1.0,"#00f")
+        
+        context.fillStyle = linearGrad;
+        context.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas 绘制七巧板</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas" width="1024" height="900">请升级您的浏览器</canvas>
+  <script>
+    $(function(){
+
+
+        var arr = [
+          {
+            p:[{x:0,y:0},{x:800,y:0},{x:400,y:400}],
+            color:"#caff67"
+          },
+          {
+            p:[{x:0,y:0},{x:400,y:400},{x:0,y:800}],
+            color:"#67becf"
+          },
+          {
+            p:[{x:800,y:0},{x:800,y:400},{x:600,y:600},{x:600,y:200}],
+            color:"#ef3d61"
+          },
+          {
+            p:[{x:600,y:200},{x:600,y:600},{x:400,y:400}],
+            color:"#f9f51a"
+          },
+          {
+            p:[{x:400,y:400},{x:600,y:600},{x:400,y:800},{x:200,y:600}],
+            color:"#a594c0"
+          },
+          {
+            p:[{x:200,y:600},{x:400,y:800},{x:0,y:800}],
+            color:"#fa8eec"
+          },
+          {
+            p:[{x:800,y:400},{x:800,y:800},{x:400,y:800}],
+            color:"#f6ca29"
+          }
+        ];
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        
+        for(var i=0;i<7;i++){
+          context.beginPath();
+          draw(arr[i],context);
+
+        }
+        
+        function draw(arr,ctx){
+          var len = arr.p.length;
+          var p = arr.p;
+          ctx.moveTo(p[0].x,p[0].y);
+          for(var i=1;i<len;i++){
+            ctx.lineTo(p[i].x,p[i].y);
+          }
+          ctx.fillStyle=arr.color;
+          ctx.fill();
+          ctx.closePath();
+          ctx.strokeStyle="#000";
+          ctx.stroke();
+          
+        }
+
+
+    })
+  </script>
+
+</body>
+</html>

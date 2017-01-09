@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews 多线条</title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+  h3{
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <h3>beiginPath, 开始一条全新的路径绘制</h3>
+    
+  <canvas id="canvas" >请升级您的浏览器</canvas>
+  </body>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      var c = $('#canvas')[0];
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+
+      var context=c.getContext('2d');//用context进行绘制
+
+      //第一段折线
+      context.beginPath();
+
+      context.lineTo(100,100);
+      context.lineTo(200,150);
+      context.lineTo(100,200);
+      context.closePath();
+
+      context.lineWidth = 10;
+      context.strokeStyle="red";
+
+      context.stroke();
+
+      //第二段折线
+      context.beginPath();
+      context.lineTo(200,100);
+      context.lineTo(300,150);
+      context.lineTo(200,200);
+    
+      context.lineWidth = 20;
+      context.strokeStyle="green";
+
+      context.stroke();
+
+      //第三段折线
+      context.beginPath();
+      context.lineTo(300,100);
+      context.lineTo(400,150);
+      context.lineTo(300,200);
+    
+      context.lineWidth = 20;
+      context.strokeStyle="blue";
+
+      
+      context.fill();
+      context.stroke();
+     
+    })
+  </script>
+</body>
+</html>

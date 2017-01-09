@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews lineJoin</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+        function drawStar(context,r,R,x,y,rot){
+          rot = rot || 0;
+          context.beginPath();
+          for (var i = 0; i < 5; i++ ){
+            context.lineTo( Math.cos((18+i*72-rot)/180*Math.PI)*R + x,
+                            -Math.sin((18+i*72-rot)/180*Math.PI)*R+y);
+            context.lineTo( Math.cos((54+i*72-rot)/180*Math.PI)*r + x,
+                            -Math.sin((54+i*72-rot)/180*Math.PI)*r+y);
+          }
+          context.closePath();
+
+          context.stroke();
+        }
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        context.strokeStyle = "#0ff";
+        context.lineWidth = 10;
+        context.lineJoin = "bevel";
+        context.miterLimit = 1000;
+        drawStar(context,10,200,200,300,rot);
+
+        context.lineJoin = "miter";
+        drawStar(context,10,200,600,300,rot);
+
+        context.lineJoin = "round";
+        drawStar(context,10,200,1000,300,rot);
+
+     
+        setInterval(function(){
+          // context.clearRect(0,0,myCanvas.width,myCanvas.height);
+          rot+=30
+          context.lineJoin = "bevel";
+          context.miterLimit = 1000;
+          drawStar(context,10,200,200,300,rot);
+
+          context.lineJoin = "miter";
+          drawStar(context,10,200,600,300,rot);
+
+          context.lineJoin = "round";
+          drawStar(context,10,200,1000,300,rot);
+        },300)
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

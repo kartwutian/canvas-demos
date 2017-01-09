@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews lineCap(round,square,butt)</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+  <script>
+    $(function(){
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        // 辅助线
+        context.beginPath();
+        context.lineTo(0,100);
+        context.lineTo(500,100);
+        context.lineWidth = 1;
+        context.strokeStyle = "#00f";
+
+        context.stroke();
+        // 辅助线
+        context.beginPath();
+        context.lineTo(0,300);
+        context.lineTo(500,300);
+        context.lineWidth = 1;
+        context.strokeStyle = "#00f";
+
+        context.stroke();
+
+        // lineCap round
+        context.beginPath();
+        context.lineTo(100,100);
+        context.lineTo(100,300);
+
+        context.lineWidth = 10;
+        context.lineCap = "round";
+        context.strokeStyle = "red";
+
+        context.stroke();
+
+        // lineCap square
+        context.beginPath();
+        context.lineTo(200,100);
+        context.lineTo(200,300);
+
+        context.lineWidth = 10;
+        context.lineCap = "square";
+        context.strokeStyle = "red";
+
+        context.stroke();
+
+        // lineCap butt 默认
+        context.beginPath();
+        context.lineTo(300,100);
+        context.lineTo(300,300);
+
+        context.lineWidth = 10;
+        context.lineCap = "butt";
+
+        context.stroke();
+
+
+
+    })
+  </script>
+
+</body>
+</html>

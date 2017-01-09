@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews pattern</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+        var backgroundImage = new Image();
+            // backgroundImage.src = "images/pattern1.jpg";
+            backgroundImage.src = "images/pattern2.jpg";
+            // backgroundImage.src = "images/pattern3.jpg";
+            // backgroundImage.src = "images/pattern4.jpg";
+            // backgroundImage.src = "images/pattern5.jpg";
+
+        backgroundImage.onload = function(){
+          // var pattern = context.createPattern(backgroundImage,"no-repeat");// 创建一条渐变线
+          // var pattern = context.createPattern(backgroundImage,"repeat-x");// 创建一条渐变线
+          // var pattern = context.createPattern(backgroundImage,"repeat-y");// 创建一条渐变线
+          var pattern = context.createPattern(backgroundImage,"repeat");// 创建一条渐变线
+
+          
+          context.fillStyle = pattern;
+          context.fillRect(0,0,myCanvas.width,myCanvas.height);
+        }
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

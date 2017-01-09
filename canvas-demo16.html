@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews radial gradient</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        var radialGrad = context.createRadialGradient(myCanvas.width/2,myCanvas.height/2,0,myCanvas.width/2,myCanvas.height/2,200);// 创建一条渐变线
+
+        radialGrad.addColorStop(0.0,"#fff")
+        radialGrad.addColorStop(0.5,"#0ff")
+        radialGrad.addColorStop(1.0,"#00f")
+        
+        context.fillStyle = radialGrad;
+        context.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+
+    })
+  </script>
+
+</body>
+</html>

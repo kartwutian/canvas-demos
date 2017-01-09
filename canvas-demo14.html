@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews draw stars sky by linear gradient </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+        function drawStar(context,x,y,R,rot){
+          
+          context.save();
+
+
+          context.translate(x,y);
+          context.rotate(rot/180*Math.PI);
+          context.scale(R,R);
+
+          starPath(context);
+
+          context.fill();
+          // context.stroke();
+
+          context.restore();
+        }
+
+        function starPath(context){
+          context.beginPath();
+          for (var i = 0; i < 5; i++ ){
+            context.lineTo( Math.cos((18+i*72)/180*Math.PI),
+                            -Math.sin((18+i*72)/180*Math.PI));
+            context.lineTo( Math.cos((54+i*72)/180*Math.PI)*0.5,
+                            -Math.sin((54+i*72)/180*Math.PI)*0.5);
+          }
+
+          context.closePath();
+        }
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        var linearGrad = context.createLinearGradient(0,0,0,myCanvas.height);// 创建一条渐变线
+        
+        linearGrad.addColorStop(0.0,"#000")
+        linearGrad.addColorStop(0.5,"#00f")
+        linearGrad.addColorStop(1.0,"#0ff")
+        
+        context.fillStyle = linearGrad;
+        context.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+        // context.strokeStyle = "#fd5";
+        context.fillStyle = "#fb3";
+        // context.lineWidth = 3;
+        // context.lineJoin = "round";
+        for(var i = 0; i < 200; i++){
+          var r = Math.random()*10+10;
+          var x = Math.random()*myCanvas.width;
+          var y = Math.random()*myCanvas.height*0.65;
+          var rot = parseInt(Math.random()*360)
+          drawStar(context,x,y,r,rot);
+        }
+        
+
+
+
+     
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

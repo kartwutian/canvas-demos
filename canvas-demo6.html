@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews 矩形绘制</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+  <script>
+    $(function(){
+
+      var myCanvas = $("#canvas")[0];
+      var context = myCanvas.getContext('2d');
+      myCanvas.width = window.innerWidth;
+      myCanvas.height = window.innerHeight;
+
+      drawRect(context,100,100,300,300)
+      drawRect(context,200,200,300,300,10,"rgba(0,0,0,0.6)","rgba(255,0,0,0.5)")
+
+      function drawRect(context,x,y,width,height,borderWidth,borderColor,fillColor){
+
+
+        context.lineWidth = borderWidth || 1;
+        context.strokeStyle = borderColor || "#000";
+        context.fillStyle = fillColor || "#0ff";
+
+        context.fillRect(x,y,width,height);
+        context.strokeRect(x,y,width,height);
+
+      }
+        
+    })
+      
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews 线条</title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+  h3{
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <h3>绘制一个箭头</h3>
+    
+  <canvas id="canvas" >请升级您的浏览器</canvas>
+  </body>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      var c = $('#canvas')[0];
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+
+      var context=c.getContext('2d');//用context进行绘制
+      context.beginPath();
+      context.moveTo(100,350);
+      context.lineTo(500,350);
+      context.lineTo(500,200);
+      context.lineTo(700,400);
+      context.lineTo(500,600);
+      context.lineTo(500,450);
+      context.lineTo(100,450);
+      context.closePath();
+      context.lineWidth = 10;
+      context.strokeStyle="red";
+
+      context.stroke();
+
+     
+    })
+  </script>
+</body>
+</html>
