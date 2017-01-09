@@ -10,24 +10,29 @@
     <script>
     $(function(){
 
+        function drawArc(R){
+          context.beginPath();
+          context.arc(myCanvas.width/2,myCanvas.height/2,R,0,Math.PI*2,false);
+          context.stroke();
+
+        }
 
         var myCanvas = $('#canvas')[0];
         var context=myCanvas.getContext('2d');//用context进行绘制
+        var R = 0;
         myCanvas.width = window.innerWidth;
         myCanvas.height = window.innerHeight;
-        var backgroundImage = new Image();
-            backgroundImage.src = "images/pattern1.jpg";
-
-        backgroundImage.onload = function(){
-          // var pattern = context.createPattern(backgroundImage,"no-repeat");// 创建一条渐变线
-          // var pattern = context.createPattern(backgroundImage,"repeat-x");// 创建一条渐变线
-          // var pattern = context.createPattern(backgroundImage,"repeat-y");// 创建一条渐变线
-          var pattern = context.createPattern(backgroundImage,"repeat");// 创建一条渐变线
-
-          
-          context.fillStyle = pattern;
-          context.fillRect(0,0,myCanvas.width,myCanvas.height);
+        
+        context.arc(myCanvas.width/2,myCanvas.height/2,1,0,Math.PI*2,false);
+        context.stroke();
+        context.strokeStyle = "#f00";
+        for(var i =0; i < 10 ; i++){
+          R += 20;
+          drawArc(R)
         }
+
+       
+
         
 
 
