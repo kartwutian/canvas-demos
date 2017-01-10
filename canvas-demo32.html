@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews draw bubble </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+
+
+        for(var i = 0; i < 100; i++){
+          var R = Math.floor(Math.random()*255)
+          var G = Math.floor(Math.random()*255)
+          var B = Math.floor(Math.random()*255)
+
+          context.save();
+          context.globalAlpha = 0.7;
+          context.fillStyle = "rgb("+R+","+G+","+B+")";
+          // context.globalCompositeOperation = "xor";
+
+          context.beginPath();
+          context.arc(Math.random()*myCanvas.width,Math.random()*myCanvas.height,Math.random()*100,0,Math.PI*2,false);
+
+          context.fill();
+          context.restore();
+          
+        }
+        
+      
+
+
+        context.font = "bold 40px Arial";
+        context.textAlign = "right";
+        context.textBaseline = "bottom";
+        context.fillText("by bhz!", myCanvas.width-50,myCanvas.height-20);
+     
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews searchLight </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+        
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        context.fillStyle = "#000";
+        context.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+        
+        context.fillStyle = "#fff";
+        context.beginPath();
+        context.arc(500,300,200,0,Math.PI*2);
+        context.fill();
+        context.clip()
+       
+
+        context.fillStyle = "#ff0";
+        context.font = "bold 200px Arial";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText("by bhz!", 500,300);
+     
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews 2 searchLight </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+        var searchLight1 = {
+          x: 400,
+          y: 400,
+          R: 150,
+          vx: Math.random()*5+10,
+          vy: Math.random()*5+10
+        }
+
+        var searchLight2 = {
+          x: 800,
+          y: 400,
+          R: 150,
+          vx: -Math.random()*5+10,
+          vy: -Math.random()*5+10
+        }
+
+        function dis(x0,y0,x1,y1){
+          return Math.sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0))
+
+        }
+        
+        function draw(context){
+          var myCanvas = context.canvas;
+          context.clearRect(0,0,myCanvas.width,myCanvas.height);
+          context.save();
+
+          context.beginPath();
+          context.fillStyle = "#000";
+          context.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+          
+          context.beginPath();
+          context.fillStyle = "#fff";
+          context.arc(searchLight1.x,searchLight1.y,searchLight1.R,0,Math.PI*2);
+          context.fill();
+          context.clip();
+
+          context.fillStyle = "#ff0";
+          context.font = "bold 150px Arial";
+          context.textAlign = "center";
+          context.textBaseline = "middle";
+          context.fillText("天之道，损有余以补不足!", myCanvas.width/2,100);
+          context.fillText("是故虚胜实不足胜有余!", myCanvas.width/2,300);
+          context.fillText("我勒个去!", myCanvas.width/2,500);
+
+          context.restore();
+
+          context.save();
+
+          context.beginPath();
+          context.fillStyle = "#000";
+
+
+          
+          context.beginPath();
+          context.fillStyle = "#f0f";
+          context.arc(searchLight2.x,searchLight2.y,searchLight2.R,0,Math.PI*2);
+          context.fill();
+          context.clip();
+
+          context.fillStyle = "#ff0";
+          context.font = "bold 150px Arial";
+          context.textAlign = "center";
+          context.textBaseline = "middle";
+          context.fillText("天之道，损有余以补不足!", myCanvas.width/2,100);
+          context.fillText("是故虚胜实不足胜有余!", myCanvas.width/2,300);
+          context.fillText("我勒个去!", myCanvas.width/2,500);
+
+          context.restore();
+        }
+
+        function update(myCanvasWidth,myCanvasHeight){
+          searchLight1.x += searchLight1.vx;
+          searchLight1.y += searchLight1.vy;
+
+          if( searchLight1.x-searchLight1.R <= 0 ){
+            searchLight1.vx = -searchLight1.vx;
+            searchLight1.x = searchLight1.R;
+          }
+
+          if( searchLight1.x+searchLight1.R >= myCanvasWidth ){
+            searchLight1.vx = -searchLight1.vx;
+            searchLight1.x = myCanvasWidth-searchLight1.R;
+          }
+
+          if( searchLight1.y-searchLight1.R <= 0 ){
+            searchLight1.vy = -searchLight1.vy;
+            searchLight1.y = searchLight1.R;
+          }
+
+          if( searchLight1.y+searchLight1.R >= myCanvasHeight ){
+            searchLight1.vy = -searchLight1.vy;
+            searchLight1.y = myCanvasHeight-searchLight1.R;
+          }
+
+          searchLight2.x += searchLight2.vx;
+          searchLight2.y += searchLight2.vy;
+
+          if( searchLight2.x-searchLight2.R <= 0 ){
+            searchLight2.vx = -searchLight2.vx;
+            searchLight2.x = searchLight2.R;
+          }
+
+          if( searchLight2.x+searchLight2.R >= myCanvasWidth ){
+            searchLight2.vx = -searchLight2.vx;
+            searchLight2.x = myCanvasWidth-searchLight2.R;
+          }
+
+          if( searchLight2.y-searchLight2.R <= 0 ){
+            searchLight2.vy = -searchLight2.vy;
+            searchLight2.y = searchLight2.R;
+          }
+
+          if( searchLight2.y+searchLight2.R >= myCanvasHeight ){
+            searchLight2.vy = -searchLight2.vy;
+            searchLight2.y = myCanvasHeight-searchLight2.R;
+          }
+
+          // 两球碰撞检测
+          if( dis(searchLight2.x,searchLight2.y,searchLight1.x,searchLight1.y) <= searchLight1.R+searchLight2.R ){
+
+            if(searchLight2.vx/searchLight1.vx > 0 && searchLight2.vy/searchLight1.vy > 0){
+                searchLight2.vx = -searchLight1.vx;
+                searchLight1.vx = -searchLight2.vx;
+                searchLight2.vy = -searchLight1.vy;
+                searchLight1.vy = -searchLight2.vy;
+            }
+
+            if(searchLight2.vx/searchLight1.vx > 0 && searchLight2.vy/searchLight1.vy < 0){
+                searchLight2.vx = -searchLight1.vx;
+                searchLight1.vx = -searchLight2.vx;
+                searchLight2.vy = -searchLight2.vy;
+                searchLight1.vy = -searchLight1.vy;
+            }
+
+            if(searchLight2.vx/searchLight1.vx < 0 && searchLight2.vy/searchLight1.vy > 0){
+                searchLight2.vx = -searchLight2.vx;
+                searchLight1.vx = -searchLight1.vx;
+                searchLight2.vy = -searchLight1.vy;
+                searchLight1.vy = -searchLight2.vy;
+            }
+
+            if(searchLight2.vx/searchLight1.vx < 0 && searchLight2.vy/searchLight1.vy < 0){
+                searchLight2.vx = -searchLight2.vx;
+                searchLight1.vx = -searchLight1.vx;
+                searchLight2.vy = -searchLight2.vy;
+                searchLight1.vy = -searchLight1.vy;
+            }
+
+            
+
+          }
+
+          
+        }
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        setInterval(function(){
+          draw(context);
+          update(myCanvas.width,myCanvas.height)
+        },40)
+
+
+
+       
+
+        
+     
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

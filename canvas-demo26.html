@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews draw quadraticCurveTo</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+        function drawQuadraticCurveTo(x0,y0,x1,y1,x2,y2){
+          context.beginPath();
+          context.lineTo(x0,y0);
+          context.quadraticCurveTo(x1,y1,x2,y2);
+
+          context.stroke();
+        }
+        
+        
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var R = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+        
+        
+        
+
+        
+        context.beginPath();
+        context.arc(500,400,300,Math.PI/2,Math.PI*3/2,true);
+
+        context.strokeStyle = "#000";
+        context.lineWidth = 1;
+
+        context.stroke();
+       
+        drawQuadraticCurveTo(500,100,700,400,500,700);
+       
+
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

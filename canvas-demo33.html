@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews globleCompositeOperation </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        
+
+        context.fillStyle = "#ff0";
+
+        context.beginPath();
+        context.arc(500,300,200,0,Math.PI*2,false);
+
+        context.fill();
+
+        context.save()
+        // context.globalCompositeOperation = "ligter";
+        // context.globalCompositeOperation = "copy";
+        context.globalCompositeOperation = "xor";
+        
+        // context.globalCompositeOperation = "destination-out";
+        // context.globalCompositeOperation = "destination-in";
+        // context.globalCompositeOperation = "destination-atop";
+        // context.globalCompositeOperation = "destination-over";
+        // context.globalCompositeOperation = "source-out";
+        // context.globalCompositeOperation = "source-in";
+        // context.globalCompositeOperation = "source-atop";
+        // context.globalCompositeOperation = "source-over";
+        // context.globalAlpha = 0.7;
+        
+        context.fillStyle = "#f00";
+        context.beginPath();
+        context.arc(800,300,200,0,Math.PI*2,false);
+
+        context.fill();
+      
+        context.restore();
+
+        context.fillStyle = "#f00";
+        context.font = "bold 40px Arial";
+        context.textAlign = "right";
+        context.textBaseline = "bottom";
+        context.fillText("by bhz!", myCanvas.width-50,myCanvas.height-20);
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

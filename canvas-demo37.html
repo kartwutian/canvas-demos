@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews paper-cut effect </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+        
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+
+        
+        context.fillStyle = "#f00";
+        context.shadowColor = "#00f";
+        context.shadowOffsetX = 10;
+        context.shadowOffsetY = 10;
+        context.shadowBlur = 10;
+
+        context.beginPath();
+        context.arc(500,300,200,0,Math.PI*2);
+        context.arc(500,300,300,0,Math.PI*2,true);
+        context.fill();
+        
+
+        context.fillStyle = "#ff0";
+        context.font = "bold 40px Arial";
+        context.textAlign = "right";
+        context.textBaseline = "bottom";
+        context.fillText("by bhz!", myCanvas.width-20,myCanvas.height-20);
+     
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

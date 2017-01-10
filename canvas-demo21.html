@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews drawRoundRect</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+        function drawRoundRect(context,x,y,width,height,R){
+          context.save();
+          context.translate(x,y);
+          pathRoundRect(context,width,height,R);
+          context.stroke();
+          context.restore();
+
+        }
+
+        function pathRoundRect(context,width,height,R){
+          context.beginPath();
+          context.arc(width-R,height-R,R,0,Math.PI/2,false);
+          context.lineTo(R,height);
+          context.arc(R,height-R,R,Math.PI/2,Math.PI,false);
+          context.lineTo(0,R);
+          context.arc(R,R,R,Math.PI,Math.PI*3/2,false);
+          context.lineTo(width-R,0);
+          context.arc(width-R,R,R,Math.PI*3/2,Math.PI*2,false);
+          context.closePath();
+        }
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var R = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+        
+        
+        drawRoundRect(context,100,100,500,200,20)
+       
+
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

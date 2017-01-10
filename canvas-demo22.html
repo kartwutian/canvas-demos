@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews arc</title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">请升级您的浏览器</canvas>
+    <script>
+    $(function(){
+
+        function drawArcTo(x0,y0,x1,y1,x2,y2,R){
+          context.beginPath();
+          context.lineTo(x0,y0);
+          context.arcTo(x1,y1,x2,y2,R);
+          
+
+          context.strokeStyle = "#f00";
+          context.lineWidth = 5;
+
+          context.stroke();
+        }
+        
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var R = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+        
+        
+        drawArcTo(400,100,800,100,800,500,500);
+
+        // 辅助线
+        context.beginPath();
+        context.lineTo(50,100);
+        context.lineTo(800,100);
+        context.lineTo(800,500);
+        
+
+        context.strokeStyle = "#000";
+        context.lineWidth = 1;
+
+        context.stroke();
+        
+       
+
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews searchLight </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+        var searchLight = {
+          x: 400,
+          y: 400,
+          R: 150,
+          vx: Math.random()*5+10,
+          vy: Math.random()*5+10
+        }
+        
+        function draw(context){
+          var myCanvas = context.canvas;
+          context.clearRect(0,0,myCanvas.width,myCanvas.height);
+          context.save();
+
+          context.beginPath();
+          context.fillStyle = "#000";
+          context.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+          
+          context.beginPath();
+          context.fillStyle = "#fff";
+          context.arc(searchLight.x,searchLight.y,searchLight.R,0,Math.PI*2);
+          context.fill();
+          context.clip();
+
+          context.fillStyle = "#ff0";
+          context.font = "bold 150px Arial";
+          context.textAlign = "center";
+          context.textBaseline = "middle";
+          context.fillText("天之道，损有余以补不足!", myCanvas.width/2,100);
+          context.fillText("是故虚胜实不足胜有余!", myCanvas.width/2,300);
+          context.fillText("我勒个去!", myCanvas.width/2,500);
+
+          context.restore();
+        }
+
+        function update(myCanvasWidth,myCanvasHeight){
+          searchLight.x += searchLight.vx;
+          searchLight.y += searchLight.vy;
+
+          if( searchLight.x-searchLight.R <= 0 ){
+            searchLight.vx = -searchLight.vx;
+            searchLight.x = searchLight.R;
+          }
+
+          if( searchLight.x+searchLight.R >= myCanvasWidth ){
+            searchLight.vx = -searchLight.vx;
+            searchLight.x = myCanvasWidth-searchLight.R;
+          }
+
+          if( searchLight.y-searchLight.R <= 0 ){
+            searchLight.vy = -searchLight.vy;
+            searchLight.y = searchLight.R;
+          }
+
+          if( searchLight.y+searchLight.R >= myCanvasHeight ){
+            searchLight.vy = -searchLight.vy;
+            searchLight.y = myCanvasHeight-searchLight.R;
+          }
+
+          
+        }
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        setInterval(function(){
+          draw(context);
+          update(myCanvas.width,myCanvas.height)
+        },40)
+
+
+
+       
+
+        
+     
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

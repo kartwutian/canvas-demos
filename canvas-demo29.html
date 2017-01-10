@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews draw stars sky add land </title>
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+        function drawLand(context){
+          context.beginPath();
+          context.lineTo(0,600);
+          context.bezierCurveTo(306, 119, 928, 582, 1440, 420);
+          context.lineTo(1440,770);
+          context.lineTo(0,770);
+          context.closePath();
+
+          context.fillStyle = "rgba(0,255,0,0.5)";
+          context.fill();
+
+        }
+
+        function dis(x0,y0,x1,y1){
+          return Math.sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0))
+
+        }
+        function fillMoon(context,d,x,y,R,rot,fillColor){
+
+          context.save();
+          context.translate(x,y);
+          context.rotate(rot/180*Math.PI);
+          context.scale(R,R);
+          pathMoon(context,d);
+
+          context.fillStyle = fillColor || "#fb5";
+          context.fill();
+          context.restore();
+        }
+        function pathMoon(context,d){
+          context.beginPath();
+          context.arc(0,0,1,Math.PI/2,Math.PI*3/2,true);
+          context.moveTo(0,-1);
+          context.arcTo(d,0,0,1,dis(d,0,0,-1)/d);
+        }
+
+        function drawStar(context,x,y,R,rot){
+          
+          context.save();
+
+
+          context.translate(x,y);
+          context.rotate(rot/180*Math.PI);
+          context.scale(R,R);
+
+          starPath(context);
+
+          context.fill();
+          // context.stroke();
+
+          context.restore();
+        }
+
+        function starPath(context){
+          context.beginPath();
+          for (var i = 0; i < 5; i++ ){
+            context.lineTo( Math.cos((18+i*72)/180*Math.PI),
+                            -Math.sin((18+i*72)/180*Math.PI));
+            context.lineTo( Math.cos((54+i*72)/180*Math.PI)*0.5,
+                            -Math.sin((54+i*72)/180*Math.PI)*0.5);
+          }
+
+          context.closePath();
+        }
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+        var rot = 0;
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        var radialGrad = context.createRadialGradient(myCanvas.width/2,myCanvas.height,0,myCanvas.width/2,myCanvas.height,myCanvas.height*1.5);// 创建一条渐变线
+        
+        radialGrad.addColorStop(0.0,"#0ff")
+        radialGrad.addColorStop(0.5,"#00f")
+        radialGrad.addColorStop(1.0,"#000")
+        
+        context.fillStyle = radialGrad;
+        context.fillRect(0,0,myCanvas.width,myCanvas.height);
+
+        // context.strokeStyle = "#fd5";
+        context.fillStyle = "#fb3";
+        // context.lineWidth = 3;
+        // context.lineJoin = "round";
+        for(var i = 0; i < 200; i++){
+          var r = Math.random()*10+10;
+          var x = Math.random()*myCanvas.width;
+          var y = Math.random()*myCanvas.height*0.65;
+          var rot = parseInt(Math.random()*360)
+          drawStar(context,x,y,r,rot);
+        }
+        
+        fillMoon(context,2,1100,200,150,30);
+
+        drawLand(context);
+
+
+        context.font = "bold 40px Arial";
+        context.textAlign = "right";
+        context.textBaseline = "bottom";
+        context.fillText("by bhz!", myCanvas.width-50,myCanvas.height-20);
+     
+        
+        
+        
+
+
+    })
+  </script>
+
+</body>
+</html>
