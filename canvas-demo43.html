@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews drawImage demo </title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        height: 2000px;
+    }
+    canvas{
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" >please update your browser</canvas>
+  <input id="scale-range" min="0.5" max="3.0" step="0.01" value="1.0" type="range" style="display:block;margin: 20px auto; width: 800px;">
+  <canvas id="watermarke" style = "display:none">please update your browser</canvas>
+  <canvas id="offCanvas" style = "display:none">please update your browser</canvas>
+  <script>
+    $(function(){
+
+        // document.onclick = function(e){
+        //     console.log(e.clientX,e.clientY)
+        // }
+        
+        function windowToCanvas(x,y){
+            var bbox = myCanvas.getBoundingClientRect()
+            return {x: x-bbox.left, y: y-bbox.top}
+        }
+
+        function toOffCanvasPointChange(x,y){
+            var scaleX = offCanvas.width/myCanvas.width;
+            var scaleY = offCanvas.height/myCanvas.height;
+            return {x: x*scaleX,y: y*scaleY}
+        }
+
+        function drawMagnifier( point ){
+            var pointLG= toOffCanvasPointChange(point.x,point.y);
+            var mr = 200;
+            var sx = pointLG.x-mr;
+            var sy = pointLG.y-mr;
+            var dx = point.x-mr;
+            var dy = point.y-mr;
+            context.save();
+            context.lineWidth = 10;
+            context.strokeStyle = "#03f";
+            context.beginPath();
+            context.arc(point.x,point.y,mr,0,Math.PI*2);
+            context.stroke();
+            context.clip();
+            context.drawImage(offCanvas,sx,sy,2*mr,2*mr,dx,dy,2*mr,2*mr);
+            context.restore();
+        }
+        function drawCanvasWithMagnifier(isShowMagnifier,point){
+            context.clearRect(0,0,myCanvas.width,myCanvas.height)
+            context.drawImage(image,0,0,myCanvas.width,myCanvas.height)
+            if( isShowMagnifier ){
+                drawMagnifier(point)
+            }
+
+        }
+        var myCanvas = $('#canvas')[0];
+            myCanvas.width = 1000;
+            myCanvas.height = 600;
+        var context=myCanvas.getContext('2d');//用context进行绘制
+
+        // 添加水印
+        var watermarkCanvas = $("#watermarke")[0];
+            watermarkCanvas.width = 300;
+            watermarkCanvas.height = 100;
+        var watermarkContext = watermarkCanvas.getContext('2d');
+
+        watermarkContext.save();
+        watermarkContext.beginPath();
+        watermarkContext.fillStyle = "rgba(255,0,255,0.5)";
+        watermarkContext.font = "50px Arial";
+        watermarkContext.textAlign = "center";
+        watermarkContext.textBaseline = "middle";
+        watermarkContext.fillText("by bhz!",150,50)
+        watermarkContext.restore();
+
+
+        
+        var isMouseDown = false;
+        var offCanvas = $("#offCanvas")[0];
+        var offContext = offCanvas.getContext('2d');
+
+
+        var slider = $("#scale-range")[0];
+        var scale = slider.value;
+
+        var image = new Image();
+            image.src = "images/2.jpg";
+
+        image.onload = function(){
+            console.log(image)
+            offCanvas.width = image.width;
+            offCanvas.height = image.height;
+            context.drawImage(image,0,0,myCanvas.width,myCanvas.height);
+            context.drawImage(watermarkCanvas,myCanvas.width-watermarkCanvas.width,myCanvas.height-watermarkCanvas.height,watermarkCanvas.width,watermarkCanvas.height);
+            offContext.drawImage(image,0,0)
+        }
+        
+        
+       // slider.onchange = function(){
+       //      scale = slider.value;
+       //      context.clearRect(0,0,myCanvas.width,myCanvas.height);
+       //      context.drawImage(image,(myCanvas.width-myCanvas.width*scale)/2,(myCanvas.height-myCanvas.height*scale)/2,myCanvas.width*scale,myCanvas.height*scale);
+       // }
+      
+        slider.onmousedown = function(){
+          slider.onmousemove = function(){
+               scale = slider.value;
+               context.clearRect(0,0,myCanvas.width,myCanvas.height);
+               context.drawImage(image,(myCanvas.width-myCanvas.width*scale)/2,(myCanvas.height-myCanvas.height*scale)/2,myCanvas.width*scale,myCanvas.height*scale);
+               context.drawImage(watermarkCanvas,myCanvas.width-watermarkCanvas.width,myCanvas.height-watermarkCanvas.height,watermarkCanvas.width,watermarkCanvas.height);
+
+          }
+        }
+       
+
+       
+
+       myCanvas.onmousedown = function (e){
+            e.preventDefault()
+
+            var point = windowToCanvas(e.clientX, e.clientY);
+            console.log(point)
+
+            isMouseDown = true;
+            drawCanvasWithMagnifier(true,point)
+            
+       }
+
+       myCanvas.onmousemove = function (e){
+            e.preventDefault()
+            if( isMouseDown ){
+                var point = windowToCanvas(e.clientX, e.clientY);
+                console.log(point)
+                drawCanvasWithMagnifier(true,point)
+            }
+       }
+
+       myCanvas.onmouseup = function (e){
+            e.preventDefault();
+            isMouseDown = false;
+            drawCanvasWithMagnifier(false)
+            
+       }
+
+       myCanvas.onmouseout = function (e){
+            e.preventDefault()
+            isMouseDown = false;
+            drawCanvasWithMagnifier(false)
+            
+       }
+      
+    })
+  </script>
+
+</body>
+</html>

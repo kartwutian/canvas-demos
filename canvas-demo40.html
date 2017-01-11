@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews drawImage demo </title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+    }
+    canvas{
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+  <input id="scale-range" min="0.5" max="3.0" step="0.01" value="1.0" type="range" style="display:block;margin: 20px auto; width: 800px;">
+    <script>
+    $(function(){
+
+        
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+        var slider = $("#scale-range")[0];
+        var scale = slider.value;
+
+        var image = new Image();
+            image.src = "images/2.jpg";
+
+        image.onload = function(){
+            console.log(image)
+            context.drawImage(image,0,0,myCanvas.width,myCanvas.height);
+        }
+        
+        
+       // slider.onchange = function(){
+       //      scale = slider.value;
+       //      context.clearRect(0,0,myCanvas.width,myCanvas.height);
+       //      context.drawImage(image,(myCanvas.width-myCanvas.width*scale)/2,(myCanvas.height-myCanvas.height*scale)/2,myCanvas.width*scale,myCanvas.height*scale);
+       // }
+        
+       slider.onmousemove = function(){
+            scale = slider.value;
+            context.clearRect(0,0,myCanvas.width,myCanvas.height);
+            context.drawImage(image,(myCanvas.width-myCanvas.width*scale)/2,(myCanvas.height-myCanvas.height*scale)/2,myCanvas.width*scale,myCanvas.height*scale);
+
+       }
+       
+    })
+  </script>
+
+</body>
+</html>

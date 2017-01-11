@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews drawImage </title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas">please update your browser</canvas>
+    <script>
+    $(function(){
+
+        
+
+        var myCanvas = $('#canvas')[0];
+        var context=myCanvas.getContext('2d');//用context进行绘制
+
+        myCanvas.width = window.innerWidth;
+        myCanvas.height = window.innerHeight;
+
+
+        var image = new Image();
+            image.src = "images/1.jpg";
+
+        image.onload = function(){
+            context.drawImage(image,0,0);
+        }
+        
+        
+        $('#canvas').click(function(e){
+
+            console.log(e)
+            context.clearRect(0,0,myCanvas.width,myCanvas.height);
+            context.drawImage(image,e.clientX,e.clientY);
+        })
+        
+
+
+    })
+  </script>
+
+</body>
+</html>

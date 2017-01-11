@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews drawImage demo </title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+    }
+    canvas{
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" >please update your browser</canvas>
+  <input id="scale-range" min="0.5" max="3.0" step="0.01" value="1.0" type="range" style="display:block;margin: 20px auto; width: 800px;">
+  <canvas id="watermarke" style = "display:none">please update your browser</canvas>
+  <script>
+    $(function(){
+
+        
+
+        var myCanvas = $('#canvas')[0];
+            myCanvas.width = 1000;
+            myCanvas.height = 600;
+        var context=myCanvas.getContext('2d');//用context进行绘制
+
+        var watermarkCanvas = $("#watermarke")[0];
+            watermarkCanvas.width = 300;
+            watermarkCanvas.height = 100;
+        var watermarkContext = watermarkCanvas.getContext('2d');
+
+        watermarkContext.save();
+        watermarkContext.beginPath();
+        watermarkContext.fillStyle = "rgba(255,0,255,0.5)";
+        watermarkContext.font = "50px Arial";
+        watermarkContext.textAlign = "center";
+        watermarkContext.textBaseline = "middle";
+        watermarkContext.fillText("by bhz!",150,50)
+        watermarkContext.restore();
+
+
+        
+
+        var slider = $("#scale-range")[0];
+        var scale = slider.value;
+
+        var image = new Image();
+            image.src = "images/2.jpg";
+
+        image.onload = function(){
+            console.log(image)
+            context.drawImage(image,0,0,myCanvas.width,myCanvas.height);
+            context.drawImage(watermarkCanvas,myCanvas.width-watermarkCanvas.width,myCanvas.height-watermarkCanvas.height,watermarkCanvas.width,watermarkCanvas.height);
+        }
+        
+        
+       // slider.onchange = function(){
+       //      scale = slider.value;
+       //      context.clearRect(0,0,myCanvas.width,myCanvas.height);
+       //      context.drawImage(image,(myCanvas.width-myCanvas.width*scale)/2,(myCanvas.height-myCanvas.height*scale)/2,myCanvas.width*scale,myCanvas.height*scale);
+       // }
+        
+       slider.onmousemove = function(){
+            scale = slider.value;
+            context.clearRect(0,0,myCanvas.width,myCanvas.height);
+            context.drawImage(image,(myCanvas.width-myCanvas.width*scale)/2,(myCanvas.height-myCanvas.height*scale)/2,myCanvas.width*scale,myCanvas.height*scale);
+            context.drawImage(watermarkCanvas,myCanvas.width-watermarkCanvas.width,myCanvas.height-watermarkCanvas.height,watermarkCanvas.width,watermarkCanvas.height);
+
+       }
+      
+    })
+  </script>
+
+</body>
+</html>

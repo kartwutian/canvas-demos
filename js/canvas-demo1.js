@@ -4,6 +4,7 @@ function tick() {
         ctx.save(),
         ctx.globalAlpha = .05,
         ctx.globalCompositeOperation = "lighter",
+        console.log(drawRays(current))
         drawRays(current) ? (current++, current = Math.min(current, txtW), window.requestAnimationFrame(tick)) : fadeOut(),
         ctx.restore()
 }
@@ -71,16 +72,18 @@ var txt = "金鸡报晓贺新春",
     w2 = cw / 2,
     h2 = ch / 2,
     pi = Math.PI,
-    pi2 = .5 * pi,
-    txtCanvas = document.createElement("canvas"),
+    pi2 = .5 * pi;
+
+var txtCanvas = document.createElement("canvas"),
     txtCtx = txtCanvas.getContext("2d");
-txtCtx.font = txtH + "px " + font,
+
+    txtCtx.font = txtH + "px " + font,
     txtCtx.textBaseline = "middle";
 var txtW = Math.floor(txtCtx.measureText(txt).width);
-txtCanvas.width = txtW,
+    txtCanvas.width = txtW,
     txtCanvas.height = 1.2 * txtH;
 var gradient = ctx.createRadialGradient(w2, h2, 0, w2, h2, txtW);
-gradient.addColorStop(0, rayColor3),
+    gradient.addColorStop(0, rayColor3),
     gradient.addColorStop(.5, rayColor2),
     gradient.addColorStop(1, rayColor1),
     ctx.strokeStyle = gradient,
@@ -88,9 +91,9 @@ gradient.addColorStop(0, rayColor3),
     txtCtx.font = txtH + "px " + font,
     txtCtx.textBaseline = "middle",
     txtCtx.fillText(txt, 0, .5 * txtH)
-txtH *= 1.5;
+    txtH *= 1.5;
 var bufferCanvas = document.createElement("canvas");
-bufferCanvas.width = txtW,
+    bufferCanvas.width = txtW,
     bufferCanvas.height = txtH;
 for (var buffer = bufferCanvas.getContext("2d"), sx = .5 * (cw - txtW), sy = .5 * (ch - txtH), rays = [], txtData = txtCtx.getImageData(0, 0, txtW, txtH), i = 0; i < txtData.data.length; i += 4) {
     var ii = i / 4,

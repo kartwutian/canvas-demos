@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    h1{
+      text-align: center;
+    }
+    a{
+      text-align: center;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>CANVAS-DEMOS</h1>
+  
+
+  <script>
+    var arr = '';
+    for(var i = 1; i < 45; i++){
+      arr +="<a href="+"canvas-demo"+i+".html"+">canvas-demo"+i+"</a>"
+    } 
+    $("h1").after(arr)
+    arr = '';
+  </script>
+</body>
+</html>
