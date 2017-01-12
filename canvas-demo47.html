@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews getImageData putImageData</title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+
+    }
+    .container{
+      margin: 100px 50px 50px;
+    }
+    img{
+      display: inline-block;
+    }
+    canvas{
+        display: inline-block;
+        cursor: pointer;
+        border: 1px solid #666;
+
+        
+    }
+    .btn{
+      text-align: center;
+      color: #0f0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <canvas id="canvas1" >please update your browser</canvas>
+    <canvas id="canvas2" >please update your browser</canvas>
+  </div>
+  
+  <div class="btn">filter</div>
+  <script>
+    $(function(){
+
+        // 灰度滤镜
+        function greyEffect(){
+          var imageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          var pixData = imageData.data //it's a array
+              for(var i = 0 ; i < myCanvas1.width*myCanvas1.height; i++){
+                var r =  pixData[4*i+0]
+                var g =  pixData[4*i+1]
+                var b = pixData[4*i+2]
+                var grey = r*0.3 + g*0.59 + b*0.11;
+
+                pixData[4*i+0] = grey
+                pixData[4*i+1] = grey
+                pixData[4*i+2] = grey
+
+                
+              }
+          context2.putImageData(imageData,0,0)
+        }
+
+        // 黑白滤镜
+        function blackEffect(){
+          var imageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          var pixData = imageData.data //it's a array
+              for(var i = 0 ; i < myCanvas1.width*myCanvas1.height; i++){
+                var r =  pixData[4*i+0]
+                var g =  pixData[4*i+1]
+                var b = pixData[4*i+2]
+                var grey = r*0.3 + g*0.59 + b*0.11;
+
+                pixData[4*i+0] = grey > 255/2 ? 255: 0
+                pixData[4*i+1] = grey > 255/2 ? 255: 0
+                pixData[4*i+2] = grey > 255/2 ? 255: 0
+
+                
+              }
+          context2.putImageData(imageData,0,0)
+        }
+
+        // 反色滤镜
+        function reverseEffect(){
+          var imageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          var pixData = imageData.data //it's a array
+              for(var i = 0 ; i < myCanvas1.width*myCanvas1.height; i++){
+                pixData[4*i+0] = 255-pixData[4*i+0] // r
+                pixData[4*i+1] = 255-pixData[4*i+1] // g
+                pixData[4*i+2] = 255-pixData[4*i+2] // b
+                pixData[4*i+3] = pixData[4*i+3] // a
+              }
+          context2.putImageData(imageData,0,0)
+        }
+
+        // 模糊滤镜
+        function blurEffect(){
+          var tmpImageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          var tmpPixData = tmpImageData.data
+
+          var imageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          var pixData = imageData.data //it's a array
+          var blurR = 1;
+          var totalNum = (2*blurR + 1) * (2*blurR + 1)
+
+          for(var i = blurR ; i < myCanvas1.height-blurR; i++){
+            for(var j = blurR ;j < myCanvas1.width-blurR; j++){
+
+              var totalR = 0, totalG = 0, totalB = 0;
+
+              for (var dx = -blurR; dx <= blurR ; dx++) {
+                for(var dy = -blurR; dy <= blurR; dy++){
+                  var x = i+dx;
+                  var y = j+dy;
+                  var p = x*myCanvas1.width+y
+                  totalR += tmpPixData[4*p+0]
+                  totalG += tmpPixData[4*p+1]
+                  totalB += tmpPixData[4*p+2]
+                }
+
+              }
+
+              var p = i*myCanvas1.width + j
+              pixData[4*p+0] = totalR/totalNum
+              pixData[4*p+1] = totalG/totalNum
+              pixData[4*p+2] = totalB/totalNum
+            }
+
+            
+          }
+
+          context2.putImageData(imageData,0,0)
+        }
+
+        // 加马赛克
+        function mosaicEffect(){
+          var tmpImageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          var tmpPixData = tmpImageData.data
+
+          var imageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          var pixData = imageData.data //it's a array
+          var size = 8;
+         
+          for(var i = 0 ; i < myCanvas1.height; i+=size){
+            for(var j = 0 ;j < myCanvas1.width; j+=size){
+
+              var totalR = 0, totalG = 0, totalB = 0;
+
+              for (var dx = 0; dx < size ; dx++) {
+                for(var dy = 0; dy < size; dy++){
+                  var x = i+dx;
+                  var y = j+dy;
+                  var p = x*myCanvas1.width+y
+                  totalR += tmpPixData[4*p+0]
+                  totalG += tmpPixData[4*p+1]
+                  totalB += tmpPixData[4*p+2]
+                }
+
+              }
+
+              // var p = i*myCanvas1.width + j
+              var averageR = totalR/(size*size)
+              var averageG = totalG/(size*size)
+              var averageB = totalB/(size*size)
+
+              for (var dx = 0; dx < size ; dx++) {
+                for(var dy = 0; dy < size; dy++){
+                  var x = i+dx;
+                  var y = j+dy;
+                  var p = x*myCanvas1.width+y
+                  pixData[4*p+0] = averageR
+                  pixData[4*p+1] = averageG
+                  pixData[4*p+2] = averageB
+                  
+                }
+
+              }
+          
+              
+            }
+
+            
+          }
+          context2.putImageData(imageData,0,0)
+        }
+
+
+        var myCanvas1 = $('#canvas1')[0];
+            myCanvas1.width = 600;
+            myCanvas1.height = 400;
+        var context1=myCanvas1.getContext('2d');//用context进行绘制
+
+        var myCanvas2 = $('#canvas2')[0];
+            myCanvas2.width = 600;
+            myCanvas2.height = 400;
+        var context2=myCanvas2.getContext('2d');//用context进行绘制
+
+        var image = new Image();
+            image.src = "images/2.jpg"
+        image.onload = function(){
+          context1.drawImage(image,0,0,myCanvas1.width,myCanvas1.height);
+          
+
+        }
+        
+        $(".btn").click(function(){
+          
+          // greyEffect()
+          // blackEffect()
+          // reverseEffect()
+          // blurEffect()
+          mosaicEffect();
+          
+        })
+        
+    })
+  </script>
+
+</body>
+</html>

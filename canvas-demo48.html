@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews getImageData putImageData</title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+
+    }
+    .container{
+      margin: 100px 50px 50px;
+    }
+
+    canvas{
+        margin: 0 auto;
+        display: block;
+        cursor: pointer;
+        border: 1px solid #666;
+
+        
+    }
+    .btn{
+      text-align: center;
+      color: #0f0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <canvas id="canvas" >please update your browser</canvas>
+    
+  </div>
+  
+
+  <script>
+    $(function(){
+
+        var myCanvas = $('#canvas')[0];
+            myCanvas.width = 600;
+            myCanvas.height = 400;
+        var context=myCanvas.getContext('2d');//用context进行绘制
+
+        var imageData = context.createImageData(myCanvas.width, myCanvas.height)
+        var pixData = imageData.data
+        for(var i = 0; i < myCanvas.height; i++){
+          for(var j =0; j < myCanvas.width; j++){
+            var p = i*myCanvas.width + j;
+
+            pixData[4*p+0] = j%255
+            pixData[4*p+1] = 255-j%255
+            pixData[4*p+2] = j%255
+            pixData[4*p+3] = 255 // alpha 通道居然用255 表示1 ，我了个去坑啊
+          }
+
+        }
+
+        context.putImageData(imageData,0,0)
+
+    })
+  </script>
+
+</body>
+</html>

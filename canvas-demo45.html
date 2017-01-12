@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas reviews getImageData putImageData</title>
+  <script src="js/jquery.min.js"></script>
+  <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+
+    }
+    .container{
+      margin: 100px 50px 50px;
+    }
+    img{
+      display: inline-block;
+    }
+    canvas{
+        display: inline-block;
+        cursor: pointer;
+
+        
+    }
+    .btn{
+      text-align: center;
+      color: #0f0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <canvas id="canvas1" >please update your browser</canvas>
+    <canvas id="canvas2" >please update your browser</canvas>
+  </div>
+  
+  <div class="btn">filter</div>
+  <script>
+    $(function(){
+
+        
+        var myCanvas1 = $('#canvas1')[0];
+            myCanvas1.width = 600;
+            myCanvas1.height = 400;
+        var context1=myCanvas1.getContext('2d');//用context进行绘制
+
+        var myCanvas2 = $('#canvas2')[0];
+            myCanvas2.width = 600;
+            myCanvas2.height = 400;
+        var context2=myCanvas2.getContext('2d');//用context进行绘制
+
+        var image = new Image();
+            image.src = "images/1.jpg"
+        image.onload = function(){
+          context1.drawImage(image,0,0,myCanvas1.width,myCanvas1.height);
+          
+
+        }
+        
+        $(".btn").click(function(){
+          imageData = context1.getImageData(0,0,myCanvas1.width,myCanvas1.height);
+          console.log(imageData)
+          context2.putImageData(imageData,0,0)
+         
+          
+        })
+        
+    })
+  </script>
+
+</body>
+</html>
